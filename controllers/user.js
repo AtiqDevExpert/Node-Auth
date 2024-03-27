@@ -3,7 +3,10 @@ const bcrypt = require("bcrypt");
 const dotenv = require("dotenv");
 dotenv.config();
 const { sendConfirmationEmail } = require("../middleware/mail");
-const { firebaseUploader } = require("../middleware/firebaseUploader");
+const {
+  firebaseUploader,
+  uploadLocalFile,
+} = require("../middleware/firebaseUploader");
 
 const { generateOTP } = require("../service/otpGenerator");
 const { setUser } = require("../middleware/auth");
@@ -68,7 +71,15 @@ const handleCreateNewUser = async (req, res) => {
   const otp = generateOTP();
 
   try {
-    const { name, phone, role, email, password, confirmPassword } = req.body;
+    const {
+      name,
+      phone,
+      role,
+      email,
+      password,
+      confirmPassword,
+      profilePicture,
+    } = req.body;
 
     const existingUser = await users.findOne({ $or: [{ email }, { phone }] });
     if (existingUser) {
@@ -82,6 +93,11 @@ const handleCreateNewUser = async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
+    if (req.file) {
+      const firebaseLink = await firebaseUploader(req.file);
+
+      user.profilePicture = firebaseLink.downloadURL;
+    }
 
     const user = new users({
       name,
@@ -93,11 +109,6 @@ const handleCreateNewUser = async (req, res) => {
       isVerified: false,
       verificationCode: otp,
     });
-    if (req.file) {
-      const firebaseLink = await firebaseUploader(req.file);
-      console.log("firebasePicLink", firebaseLink);
-      user.profilePicture = firebaseLink.downloadURL;
-    }
 
     await user.save();
 
