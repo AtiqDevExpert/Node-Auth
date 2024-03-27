@@ -22,9 +22,6 @@ app.use(
 );
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use("/", (req, res) => {
-  return res.json("App running");
-});
 app.use("/api/users", userRouter);
 app.use("/api/products", productRouter);
 
