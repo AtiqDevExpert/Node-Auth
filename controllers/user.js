@@ -3,13 +3,12 @@ const bcrypt = require("bcrypt");
 const dotenv = require("dotenv");
 dotenv.config();
 const { sendConfirmationEmail } = require("../middleware/mail");
-const {
-  firebaseUploader,
-  uploadLocalFile,
-} = require("../middleware/firebaseUploader");
+const { firebaseUploader } = require("../middleware/firebaseUploader");
 
 const { generateOTP } = require("../service/otpGenerator");
 const { setUser } = require("../middleware/auth");
+const { imageUpload } = require("../middleware/imageUpload");
+
 const handleGetAllUsers = async (req, res) => {
   try {
     const allDbUser = await users.find({});
@@ -94,9 +93,11 @@ const handleCreateNewUser = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
     if (req.file) {
-      const firebaseLink = await firebaseUploader(req.file);
-
-      user.profilePicture = firebaseLink.downloadURL;
+      // const firebaseLink = await firebaseUploader(req.file);
+      const folderName = "Users_Profile_Images";
+      const Url = await imageUpload(req.file, folderName);
+      console.log("Uploading", Url);
+      // user.profilePicture = firebaseLink.downloadURL;
     }
 
     const user = new users({

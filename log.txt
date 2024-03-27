@@ -1,3 +1,0 @@
-
- 1710670195001 : GET : /allusers
- 1710670204486 : GET : /api/users
