@@ -28,6 +28,6 @@ app.use("/", (req, res) => {
 app.use("/api/users", userRouter);
 app.use("/api/products", productRouter);
 
-app.listen(process.env.PORT || port, () => {
-  console.log("listening on port " + process.env.PORT || port);
+app.listen(process.env.PORT || PORT, () => {
+  console.log("listening on port " + process.env.PORT || PORT);
 });
