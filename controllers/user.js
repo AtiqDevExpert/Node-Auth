@@ -90,14 +90,6 @@ const handleCreateNewUser = async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    if (req.file) {
-      // const firebaseLink = await firebaseUploader(req.file);
-      const folderName = "Users_Profile_Images";
-      const Url = await imageUpload(req.file, folderName);
-      console.log("Uploading", Url);
-      // user.profilePicture = firebaseLink.downloadURL;
-    }
-
     const user = new users({
       name,
       phone,
@@ -108,6 +100,14 @@ const handleCreateNewUser = async (req, res) => {
       isVerified: false,
       verificationCode: otp,
     });
+    if (req.file) {
+      // const firebaseLink = await firebaseUploader(req.file);
+      const folderName = "users";
+      const Url = await firebaseUploader(req.file, folderName);
+      user.profilePicture = Url;
+      console.log("Uploading", Url);
+      // user.profilePicture = firebaseLink.downloadURL;
+    }
 
     await user.save();
 
