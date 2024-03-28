@@ -16,7 +16,7 @@ const firebaseUploader = async (file, folderName) => {
     const dateTime = currentDateTime();
     const storageRef = ref(
       storage,
-      `${folderName}/${file.originalname + "_" + dateTime}`
+      `${folderName}/${dateTime + "_" + file.originalname}`
     );
 
     // Create file metadata including the content type
