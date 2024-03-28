@@ -5,7 +5,6 @@ const { firebaseUploader } = require("../middleware/firebaseUploader");
 
 const { generateOTP } = require("../service/otpGenerator");
 const { setUser } = require("../middleware/auth");
-const { imageUpload } = require("../middleware/imageUpload");
 
 const handleGetAllUsers = async (req, res) => {
   try {
@@ -68,15 +67,7 @@ const handleCreateNewUser = async (req, res) => {
   const otp = generateOTP();
 
   try {
-    const {
-      name,
-      phone,
-      role,
-      email,
-      password,
-      confirmPassword,
-      profilePicture,
-    } = req.body;
+    const { name, phone, role, email, password, confirmPassword } = req.body;
 
     const existingUser = await users.findOne({ $or: [{ email }, { phone }] });
     if (existingUser) {
@@ -101,12 +92,9 @@ const handleCreateNewUser = async (req, res) => {
       verificationCode: otp,
     });
     if (req.file) {
-      // const firebaseLink = await firebaseUploader(req.file);
       const folderName = "users";
-      const Url = await firebaseUploader(req.file, folderName);
-      user.profilePicture = Url;
-      console.log("Uploading", Url);
-      // user.profilePicture = firebaseLink.downloadURL;
+      const databseURL = await firebaseUploader(req.file, folderName);
+      user.profilePicture = databseURL.downloadURL;
     }
 
     await user.save();
