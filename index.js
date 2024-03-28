@@ -1,10 +1,10 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const app = express();
 const bodyParser = require("body-parser");
 app.use("/uploads", express.static("uploads"));
-const dotenv = require("dotenv");
-dotenv.config();
+
 const userRouter = require("./routes/user");
 const productRouter = require("./routes/product");
 const { connectMongoDB } = require("./connection");

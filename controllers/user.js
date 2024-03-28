@@ -1,7 +1,5 @@
 const users = require("../models/user");
 const bcrypt = require("bcrypt");
-const dotenv = require("dotenv");
-dotenv.config();
 const { sendConfirmationEmail } = require("../middleware/mail");
 const { firebaseUploader } = require("../middleware/firebaseUploader");
 
