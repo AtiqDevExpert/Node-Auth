@@ -17,8 +17,8 @@ const serviceAccount = {
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://e-commerce-a5d5f-default-rtdb.firebaseio.com",
-  storageBucket: "gs://e-commerce-a5d5f.appspot.com",
+  databaseURL: process.env.DATABASE_URL,
+  storageBucket: process.env.STORAGE_BUCKET,
 });
 const bucket = admin.storage().bucket();
 

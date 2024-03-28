@@ -9,7 +9,7 @@ const sendConfirmationEmail = async (email, otp) => {
       secure: false,
       auth: {
         user: "atiqurrehman01m@gmail.com",
-        pass: "wphbxzhyptrcqpuq",
+        pass: "wrwj fskd mzlu uvux",
       },
     });
 
