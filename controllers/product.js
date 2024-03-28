@@ -82,7 +82,12 @@ const handleCreateNewProduct = async (req, res) => {
       productPrice,
       productTotalQuantity,
     });
-
+    if (req.file) {
+      const folderName = "products";
+      const databseURL = await firebaseUploader(req.file, folderName);
+      console.log(databseURL);
+      user.productImage = databseURL.downloadURL;
+    }
     await product.save();
 
     return res
