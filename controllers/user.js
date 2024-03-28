@@ -136,7 +136,26 @@ const handleVerifyEmailWithOtp = async (req, res) => {
       .status(201)
       .json({ user: data, message: "User created and verified successfully" });
   } catch (error) {
-    console.error("Error:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+const handleVerifyhOtpCreatePassword = async (req, res) => {
+  const id = req.params.id;
+  const { otp } = req.body;
+  try {
+    const user = await users.findByIdAndUpdate(id, { verificationCode: otp });
+
+    if (!user || user.verificationCode !== otp) {
+      return res.status(404).json({ message: "Invalid OTP" });
+    }
+    user.isVerified = true;
+    user.verificationCode = undefined; // Clear verificationCode
+    await user.save();
+
+    return res
+      .status(202)
+      .json({ id: user._id, message: "Otp verified successfully" });
+  } catch (error) {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -156,7 +175,6 @@ const handleVerifyUserEmail = async (req, res) => {
       .status(200)
       .json({ id: user._id, message: "OTP successfully send to your email" });
   } catch (error) {
-    console.error("Error:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -175,7 +193,27 @@ const handleResendOtp = async (req, res) => {
       .status(201)
       .json({ id: user._id, message: "OTP successfully send to your email" });
   } catch (error) {
-    console.error("Error:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+const handleCreateNewPassword = async (req, res) => {
+  const id = req.params.id;
+  const { password, confirmPassword } = req.body;
+
+  try {
+    const user = await users.findByIdAndUpdate(id, { verificationCode: otp });
+
+    if (!user) {
+      return res.status(404).json({ message: "Invalid User" });
+    }
+    const hashedPassword = await bcrypt.hash(password, 10);
+    user.password = hashedPassword;
+    user.confirmPassword = hashedPassword;
+    await user.save();
+    return res
+      .status(200)
+      .json({ id: user._id, message: "Password successfully Updated" });
+  } catch (error) {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -232,4 +270,6 @@ module.exports = {
   handleVerifyEmailWithOtp,
   handleResendOtp,
   handleVerifyUserEmail,
+  handleVerifyhOtpCreatePassword,
+  handleCreateNewPassword,
 };

@@ -11,6 +11,8 @@ const {
   handleVerifyEmailWithOtp,
   handleResendOtp,
   handleVerifyUserEmail,
+  handleVerifyhOtpCreatePassword,
+  handleCreateNewPassword,
 } = require("../controllers/user");
 const { verifyToken } = require("../middleware/auth");
 
@@ -29,5 +31,7 @@ router.post("/login", handleLoginUser);
 router.post("/verifyotp/:id", handleVerifyEmailWithOtp);
 router.post("/resendotp/:id", handleResendOtp);
 router.post("/verifyuseremail", handleVerifyUserEmail);
+router.post("/verifyotpcreatepassword", handleVerifyhOtpCreatePassword);
+router.post("/createnewpassword", handleCreateNewPassword);
 
 module.exports = router;
