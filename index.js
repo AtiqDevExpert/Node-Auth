@@ -20,7 +20,7 @@ app.use(
 );
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.get("/", (req, res) => res.send("Express on Vercel"));
+app.get("/", (req, res) => res.send("Backend Started!"));
 app.use("/api/users", userRouter);
 app.use("/api/products", productRouter);
 
