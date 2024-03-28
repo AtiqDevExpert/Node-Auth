@@ -8,10 +8,8 @@ dotenv.config();
 const userRouter = require("./routes/user");
 const productRouter = require("./routes/product");
 const { connectMongoDB } = require("./connection");
-
-const dbUrl =
-  "mongodb+srv://atiqurrehman01m:tlNn3dkbCzc7jcKn@cluster0.qgeyfgv.mongodb.net/";
-
+const PORT = process.env.PORT || 8000;
+const dbUrl = process.env.MONGO_DB_URL;
 connectMongoDB(dbUrl);
 app.use(cors());
 app.use(bodyParser.json());
@@ -22,12 +20,9 @@ app.use(
 );
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use("/home", (req, res) => {
-  return res.json("App running");
-});
 app.use("/api/users", userRouter);
 app.use("/api/products", productRouter);
 
-app.listen(process.env.PORT || PORT, () => {
-  console.log("listening on port " + process.env.PORT || PORT);
+app.listen(PORT, () => {
+  console.log("listening on port " + PORT);
 });
