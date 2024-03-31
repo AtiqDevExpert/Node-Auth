@@ -118,7 +118,7 @@ const handleCreateNewUser = async (req, res) => {
   }
 };
 
-const handleVerifyUOtpUserCreation = async (req, res) => {
+const handleVerifyOtpUserCreation = async (req, res) => {
   const id = req.params.id;
   const { otp } = req.body;
   try {
@@ -276,7 +276,7 @@ module.exports = {
   handleDeleteUserbyId,
   handleCreateNewUser,
   handleLoginUser,
-  handleVerifyUOtpUserCreation,
+  handleVerifyOtpUserCreation,
   handleResendOtp,
   handleVerifyUserEmail,
   handleVerifyhOtpCreatePassword,
