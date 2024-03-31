@@ -8,7 +8,7 @@ const {
   handleDeleteUserbyId,
   handleCreateNewUser,
   handleLoginUser,
-  handleVerifyEmailWithOtp,
+  handleVerifyUOtpUserCreation,
   handleResendOtp,
   handleVerifyUserEmail,
   handleVerifyhOtpCreatePassword,
@@ -28,7 +28,7 @@ router
   .delete(verifyToken, handleDeleteUserbyId);
 router.post("/signup", upload.single("profilePicture"), handleCreateNewUser);
 router.post("/login", handleLoginUser);
-router.post("/verifyotp/:id", handleVerifyEmailWithOtp);
+router.post("/verifyotp/:id", handleVerifyUOtpUserCreation);
 router.post("/resendotp/:id", handleResendOtp);
 router.post("/verifyuseremail", handleVerifyUserEmail);
 router.post("/verifyotpcreatepassword", handleVerifyhOtpCreatePassword);

@@ -67,7 +67,15 @@ const handleCreateNewUser = async (req, res) => {
   const otp = generateOTP();
 
   try {
-    const { name, phone, role, email, password, confirmPassword } = req.body;
+    const {
+      name,
+      phone,
+      role,
+      email,
+      password,
+      confirmPassword,
+      profilePicture,
+    } = req.body;
 
     const existingUser = await users.findOne({ $or: [{ email }, { phone }] });
     if (existingUser) {
@@ -88,6 +96,7 @@ const handleCreateNewUser = async (req, res) => {
       email,
       password: hashedPassword,
       confirmPassword: hashedPassword,
+      profilePicture: profilePicture,
       isVerified: false,
       verificationCode: otp,
     });
@@ -109,7 +118,7 @@ const handleCreateNewUser = async (req, res) => {
   }
 };
 
-const handleVerifyEmailWithOtp = async (req, res) => {
+const handleVerifyUOtpUserCreation = async (req, res) => {
   const id = req.params.id;
   const { otp } = req.body;
   try {
@@ -267,7 +276,7 @@ module.exports = {
   handleDeleteUserbyId,
   handleCreateNewUser,
   handleLoginUser,
-  handleVerifyEmailWithOtp,
+  handleVerifyUOtpUserCreation,
   handleResendOtp,
   handleVerifyUserEmail,
   handleVerifyhOtpCreatePassword,
