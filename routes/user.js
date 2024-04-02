@@ -31,7 +31,7 @@ router.post("/login", handleLoginUser);
 router.post("/verifyotp/:id", handleVerifyOtpUserCreation);
 router.post("/resendotp/:id", handleResendOtp);
 router.post("/verifyuseremail", handleVerifyUserEmail);
-router.post("/verifyotpcreatepassword", handleVerifyhOtpCreatePassword);
-router.post("/createnewpassword", handleCreateNewPassword);
+router.post("/verifyotpcreatepassword/:id", handleVerifyhOtpCreatePassword);
+router.post("/createnewpassword/:id", handleCreateNewPassword);
 
 module.exports = router;

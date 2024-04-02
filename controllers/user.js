@@ -153,7 +153,6 @@ const handleVerifyhOtpCreatePassword = async (req, res) => {
   const { otp } = req.body;
   try {
     const user = await users.findByIdAndUpdate(id, { verificationCode: otp });
-    console.log("user ====>", user);
     if (!user || user?.verificationCode !== otp) {
       return res.status(404).json({ message: "Invalid OTP" });
     }
