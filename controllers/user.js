@@ -12,7 +12,7 @@ const handleGetAllUsers = async (req, res) => {
     if (allDbUser.length > 0) {
       return res.json({ users: allDbUser });
     } else {
-      return res.json({ errors: "no users found" });
+      return res.json({ message: "no users found" });
     }
   } catch (error) {
     return res.status(500).json({ message: "Internal server error" });
@@ -22,7 +22,7 @@ const handleGetUserById = async (req, res) => {
   try {
     const user = await users.findById(req.params.id);
     if (!user) return res.status(404).json({ message: "User not found" });
-    return res.json(user);
+    return res.json({ user: user });
   } catch (error) {
     return res.status(500).json({ message: "Internal server error" });
   }
@@ -43,7 +43,7 @@ const handleUpdateUserById = async (req, res) => {
       });
     } else {
       return res.status(404).json({
-        error: "User not found",
+        message: "User not found",
       });
     }
   } catch (error) {
@@ -57,7 +57,7 @@ const handleDeleteUserbyId = async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
     if (deletedUser) {
-      return res.json({ status: "Delete Successfully", user: deletedUser });
+      return res.json({ message: "Delete Successfully", user: deletedUser });
     }
   } catch (error) {
     return res.status(500).json({ message: "Internal server error" });
@@ -85,7 +85,7 @@ const handleCreateNewUser = async (req, res) => {
     }
 
     if (!name || !email || !password || !confirmPassword || !role) {
-      return res.status(400).json({ error: "All fields are required" });
+      return res.status(400).json({ message: "All fields are required" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
