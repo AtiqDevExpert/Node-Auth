@@ -205,11 +205,10 @@ const handleResendOtp = async (req, res) => {
   }
 };
 const handleCreateNewPassword = async (req, res) => {
-  const id = req.params.id;
   const { password, confirmPassword } = req.body;
 
   try {
-    const user = await users.findByIdAndUpdate(id, { verificationCode: otp });
+    const user = await users.findByIdAndUpdate(req.params.id);
 
     if (!user) {
       return res.status(404).json({ message: "Invalid User" });
