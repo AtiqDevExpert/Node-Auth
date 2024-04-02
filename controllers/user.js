@@ -217,6 +217,7 @@ const handleCreateNewPassword = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     user.password = hashedPassword;
     user.confirmPassword = hashedPassword;
+    user.verificationCode = undefined; // Clear verificationCode
     await user.save();
     return res.status(200).json({ message: "Password successfully Updated" });
   } catch (error) {
