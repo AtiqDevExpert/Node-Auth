@@ -11,13 +11,10 @@ const { currentDateTime } = require("../service/currentDataTime");
 const app = initializeApp(firebaseConfig);
 const storage = getStorage(app);
 
-const firebaseUploader = async (file, folderName) => {
+const firebaseUploader = async (file) => {
   try {
     const dateTime = currentDateTime();
-    const storageRef = ref(
-      storage,
-      `${folderName}/${dateTime + "_" + file.originalname}`
-    );
+    const storageRef = ref(storage, `${dateTime + "_" + file.originalname}`);
 
     // Create file metadata including the content type
     const metadata = {

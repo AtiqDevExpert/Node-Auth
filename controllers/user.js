@@ -101,8 +101,7 @@ const handleCreateNewUser = async (req, res) => {
       verificationCode: otp,
     });
     if (req.file) {
-      const folderName = "users";
-      const databseURL = await firebaseUploader(req.file, folderName);
+      const databseURL = await firebaseUploader(req.file);
       user.profilePicture = databseURL.downloadURL;
     }
 

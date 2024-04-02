@@ -64,13 +64,15 @@ const handleCreateNewProduct = async (req, res) => {
       productPrice,
       productDescription,
       productTotalQuantity,
+      productImage,
     } = req.body;
 
     if (
       !productName ||
       !productPrice ||
       !productDescription ||
-      !productTotalQuantity
+      !productTotalQuantity ||
+      !productImage
     ) {
       return res.status(400).json({ error: "All fields are required" });
     }
@@ -81,10 +83,11 @@ const handleCreateNewProduct = async (req, res) => {
       productDescription,
       productPrice,
       productTotalQuantity,
+      productImage,
     });
     if (req.file) {
-      const folderName = "products";
-      const databseURL = await firebaseUploader(req.file, folderName);
+      // const folderName = "products";
+      const databseURL = await firebaseUploader(req.file);
 
       product.productImage = databseURL.downloadURL;
     }
