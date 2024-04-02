@@ -246,7 +246,7 @@ const handleLoginUser = async (req, res) => {
         });
       }
       const token = setUser(user);
-      console.log("user ======>", user, token);
+      console.log("user ======>", token);
       const userData = {
         _id: user._id,
         name: user.name,
