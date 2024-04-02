@@ -227,34 +227,35 @@ const handleLoginUser = async (req, res) => {
   try {
     const otp = generateOTP();
     const { email, password } = req.body;
-    const isUser = await users.findOne({ email });
-    if (isUser) {
-      const isPasswordValid = await bcrypt.compare(password, isUser.password);
+    const user = await users.findOne({ email });
+    console.log("user ======>", user);
+    if (user) {
+      const isPasswordValid = await bcrypt.compare(password, user.password);
 
       if (!isPasswordValid) {
         return res.status(401).json({ message: "Invalid password" });
       }
-      if (!isUser.isVerified) {
-        isUser.verificationCode = otp;
-        await isUser.save();
+      if (!user.isVerified) {
+        user.verificationCode = otp;
+        await user.save();
         sendConfirmationEmail(email, otp);
-        console.log(isUser);
+
         return res.status(203).json({
           message:
             "User is not verified , otp send to your email please verified to login",
         });
       }
-      const token = setUser(isUser);
-      const user = {
-        _id: isUser._id,
-        name: isUser.name,
-        email: isUser.email,
-        phone: isUser.phone,
-        role: isUser.role,
-        profilePicture: isUser.profilePicture,
+      const token = setUser(user);
+      const userData = {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        role: user.role,
+        profilePicture: user.profilePicture,
       };
       return res.status(200).json({
-        user: user,
+        user: userData,
         token: token,
         message: "User login Successfuly",
       });
