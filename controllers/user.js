@@ -254,7 +254,7 @@ const handleLoginUser = async (req, res) => {
         profilePicture: isUser.profilePicture,
       };
       return res.status(200).json({
-        data: user,
+        user: user,
         token: token,
         message: "User login Successfuly",
       });
