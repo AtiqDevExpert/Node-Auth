@@ -11,7 +11,7 @@ const productSchema = new mongoose.Schema(
       required: true,
     },
     productPrice: {
-      type: String,
+      type: Number,
       required: true,
     },
     productImage: {
@@ -20,15 +20,15 @@ const productSchema = new mongoose.Schema(
     },
 
     productTotalQuantity: {
-      type: String,
+      type: Number,
       required: true,
     },
     productSellQuantity: {
-      type: String,
+      type: Number,
       required: false,
     },
     productRemainingQuantity: {
-      type: String,
+      type: Number,
       required: false,
     },
   },
