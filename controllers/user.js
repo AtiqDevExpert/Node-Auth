@@ -10,7 +10,7 @@ const handleGetAllUsers = async (req, res) => {
   try {
     const allDbUser = await users.find({});
     if (allDbUser.length > 0) {
-      return res.json(allDbUser);
+      return res.json({ users: allDbUser });
     } else {
       return res.json({ errors: "no users found" });
     }

@@ -31,6 +31,10 @@ const productSchema = new mongoose.Schema(
       type: Number,
       required: false,
     },
+    productCategory: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );
