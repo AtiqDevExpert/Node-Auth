@@ -228,7 +228,7 @@ const handleLoginUser = async (req, res) => {
     const otp = generateOTP();
     const { email, password } = req.body;
     const user = await users.findOne({ email });
-    console.log("user ======>", user);
+
     if (user) {
       const isPasswordValid = await bcrypt.compare(password, user.password);
 
@@ -246,6 +246,7 @@ const handleLoginUser = async (req, res) => {
         });
       }
       const token = setUser(user);
+      console.log("user ======>", user, token);
       const userData = {
         _id: user._id,
         name: user.name,
