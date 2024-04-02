@@ -218,9 +218,7 @@ const handleCreateNewPassword = async (req, res) => {
     user.password = hashedPassword;
     user.confirmPassword = hashedPassword;
     await user.save();
-    return res
-      .status(200)
-      .json({ id: user._id, message: "Password successfully Updated" });
+    return res.status(200).json({ message: "Password successfully Updated" });
   } catch (error) {
     return res.status(500).json({ message: "Internal server error" });
   }
