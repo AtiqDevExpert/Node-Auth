@@ -86,7 +86,8 @@ const handleCreateNewProduct = async (req, res) => {
       !productPrice ||
       !productDescription ||
       !productTotalQuantity ||
-      !productCategory
+      !productCategory ||
+      !productImage
     ) {
       return res.status(400).json({ message: "All fields are required" });
     }
