@@ -8,14 +8,12 @@ const {
   handleUpdateProductById,
   handleDeleteProductbyId,
   handleCreateNewProduct,
-  handleGetAllProductsCategories,
 } = require("../controllers/product");
 const { verifyToken } = require("../middleware/auth");
 
 const router = express.Router();
 
 router.get("/", handleGetAllProducts);
-router.get("/allcategories", handleGetAllProductsCategories);
 
 router
   .route("/products/:id")

@@ -1,30 +1,19 @@
 const { firebaseUploader } = require("../middleware/firebaseUploader");
-const Category = require("../models/category");
+
 const products = require("../models/products");
 const handleGetAllProducts = async (req, res) => {
   try {
-    const allDbProducts = await products.find({});
-    if (allDbProducts.length > 0) {
-      return res.json({ products: allDbProducts });
+    const allProducts = await products.find({});
+    if (allProducts.length > 0) {
+      return res.json({ products: allProducts });
     } else {
-      return res.json({ errors: "no products found" });
+      return res.json({ errors: "no result found" });
     }
   } catch (error) {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
-const handleGetAllProductsCategories = async (req, res) => {
-  try {
-    const allDbCategories = await Category.find({});
-    if (allDbCategories.length > 0) {
-      return res.json({ Categories: allDbCategories });
-    } else {
-      return res.json({ errors: "no Category found" });
-    }
-  } catch (error) {
-    return res.status(500).json({ message: "Internal server error" });
-  }
-};
+
 const handleGetProductById = async (req, res) => {
   try {
     const product = await products.findById(req.params.id);
@@ -92,13 +81,6 @@ const handleCreateNewProduct = async (req, res) => {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-    // Check if the category exists in the database
-    let existingCategory = await Category.findOne({ name: productCategory });
-    if (!existingCategory) {
-      existingCategory = new Category({ name: productCategory });
-      await existingCategory.save();
-    }
-
     // Create a new product instance
     const product = new products({
       productName,
@@ -106,7 +88,7 @@ const handleCreateNewProduct = async (req, res) => {
       productPrice,
       productTotalQuantity,
       productImage,
-      productCategory: existingCategory.name, // Associate product with category
+      productCategory,
     });
 
     if (req.file) {
@@ -131,5 +113,4 @@ module.exports = {
   handleUpdateProductById,
   handleDeleteProductbyId,
   handleCreateNewProduct,
-  handleGetAllProductsCategories,
 };

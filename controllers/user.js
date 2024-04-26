@@ -8,11 +8,11 @@ const { setUser } = require("../middleware/auth");
 
 const handleGetAllUsers = async (req, res) => {
   try {
-    const allDbUser = await users.find({});
-    if (allDbUser.length > 0) {
-      return res.json({ users: allDbUser });
+    const allUser = await users.find({});
+    if (allUser.length > 0) {
+      return res.json({ users: allUser });
     } else {
-      return res.json({ message: "no users found" });
+      return res.json({ errors: "no result found" });
     }
   } catch (error) {
     return res.status(500).json({ message: "Internal server error" });
