@@ -66,21 +66,21 @@ const handleCreateNewCategory = async (req, res) => {
   try {
     const { categoryName, categoryImage } = req.body;
 
-    if (!categoryName || categoryImage) {
-      return res.status(400).json({ message: "All fields are required" });
+    if (!categoryName) {
+      return res.status(400).json({ message: "Category Name Required" });
     }
 
-    existingCategory = new category({ categoryName, categoryImage });
-    await existingCategory.save();
+    const newCategory = new category({ categoryName, categoryImage });
+    await newCategory.save();
 
-    if (req.file) {
-      const databseURL = await firebaseUploader(req.file);
-      product.productImage = databseURL.downloadURL;
-    }
+    // if (req.file) {
+    //   const databseURL = await firebaseUploader(req.file);
+    //   product.productImage = databseURL.downloadURL;
+    // }
 
     return res
       .status(200)
-      .json({ data: product, message: "category created successfully" });
+      .json({ data: category, message: "category created successfully" });
   } catch (error) {
     console.error("Error creating new category:", error);
     return res.status(500).json({ message: "Internal server error" });
